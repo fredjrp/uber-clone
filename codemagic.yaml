@@ -1,0 +1,37 @@
+workflows:
+  windows-admin-panel:
+    name: Uber Admin Panel Windows Build
+    max_build_duration: 60
+    instance_type: windows_x2
+    environment:
+      flutter: master # Using master as requested
+      vars:
+        # Define the subfolder path here
+        PROJECT_ROOT: "admin_panel" 
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: 'master'
+          include: true
+    scripts:
+      - name: Configure Windows Desktop
+        script: |
+          flutter config --enable-windows-desktop
+
+      - name: Get Flutter packages
+        script: |
+          cd $PROJECT_ROOT
+          flutter pub get
+
+      - name: Build Windows
+        script: |
+          cd $PROJECT_ROOT
+          # Build the release version
+          flutter build windows --release
+
+    artifacts:
+      # This grabs the executable and all necessary .dll files
+      - admin_panel/build/windows/x64/release/runner/*.exe
+      - admin_panel/build/windows/x64/release/runner/*.dll
+      - admin_panel/build/windows/x64/release/runner/data/**
