@@ -4,10 +4,7 @@ workflows:
     max_build_duration: 60
     instance_type: windows_x2
     environment:
-      flutter: master # Using master as requested
-      vars:
-        # Define the subfolder path here
-        PROJECT_ROOT: "admin_panel" 
+      flutter: stable
     triggering:
       events:
         - push
@@ -19,19 +16,18 @@ workflows:
         script: |
           flutter config --enable-windows-desktop
 
-      - name: Get Flutter packages
+      - name: Build Windows App
         script: |
-          cd $PROJECT_ROOT
+          # Navigate into your specific folder from the screenshot
+          cd uber_admin_panel
+          
+          # Clean and fetch dependencies
           flutter pub get
-
-      - name: Build Windows
-        script: |
-          cd $PROJECT_ROOT
-          # Build the release version
-          flutter build windows --release
+          
+          # Build the release executable
+          flutter build windows --release --no-tree-shake-icons
 
     artifacts:
-      # This grabs the executable and all necessary .dll files
-      - admin_panel/build/windows/x64/release/runner/*.exe
-      - admin_panel/build/windows/x64/release/runner/*.dll
-      - admin_panel/build/windows/x64/release/runner/data/**
+      - uber_admin_panel/build/windows/x64/release/runner/*.exe
+      - uber_admin_panel/build/windows/x64/release/runner/*.dll
+      - uber_admin_panel/build/windows/x64/release/runner/data/**
