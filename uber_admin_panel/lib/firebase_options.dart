@@ -7,10 +7,12 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'DUMMY-API-KEY-FOR-BUILDING',
-    appId: '1:1234567890:android:1234567890',
-    messagingSenderId: '1234567890',
-    projectId: 'dummy-project-id',
-    storageBucket: 'dummy-project.appspot.com',
+  apiKey: "AIzaSyAk9DOEc_hmyeAJEob8QBAyQkiZCp_CPuI",
+  authDomain: "uberzo.firebaseapp.com",
+  projectId: "uberzo",
+  storageBucket: "uberzo.firebasestorage.app",
+  messagingSenderId: "805708188196",
+  appId: "1:805708188196:web:4bbfbf0b2833ade319a6b1",
+  measurementId: "G-9F656XRL64",
   );
 }
