@@ -28,6 +28,8 @@ workflows:
           flutter build windows --release --no-tree-shake-icons
 
     artifacts:
-      - uber_admin_panel/build/windows/x64/release/runner/*.exe
-      - uber_admin_panel/build/windows/x64/release/runner/*.dll
-      - uber_admin_panel/build/windows/x64/release/runner/data/**
+artifacts:
+      # This searches all subdirectories for the release files
+      - "**/build/windows/x64/runner/Release/*.exe"
+      - "**/build/windows/x64/runner/Release/*.dll"
+      - "**/build/windows/x64/runner/Release/data/**"
