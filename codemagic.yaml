@@ -1,8 +1,8 @@
 workflows:
-  windows-admin-panel:
-    name: Uber Admin Panel Windows Build
+  android-driver-app:
+    name: Uber Driver Android Build
     max_build_duration: 60
-    instance_type: windows_x2
+    instance_type: mac_mini_m2 # Android builds are faster on Mac/Linux instances
     environment:
       flutter: stable
     triggering:
@@ -12,19 +12,26 @@ workflows:
         - pattern: 'master'
           include: true
     scripts:
-      - name: Configure Windows Desktop
+      - name: Set up local.properties
         script: |
-          flutter config --enable-windows-desktop
+          echo "flutter.sdk=$FLUTTER_ROOT" > uber_drivers_app/android/local.properties
 
-      - name: Build Windows App
+      - name: Get Flutter packages
         script: |
-          cd uber_admin_panel
+          cd uber_drivers_app
           flutter pub get
-          flutter build windows --release --no-tree-shake-icons
+
+      - name: Clean and Build APK
+        script: |
+          cd uber_drivers_app
+          
+          # Fix for the 45 errors you had earlier: 
+          # Remove the old registrant and let Flutter recreate it fresh
+          rm -rf android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+          
+          # Build the APK
+          # Adding --no-tree-shake-icons to prevent font errors common in clones
+          flutter build apk --release --no-tree-shake-icons --android-skip-build-dependency-validation
 
     artifacts:
-      # This recursive pattern (**/) tells Codemagic to search 
-      # every single folder in the repo for these files.
-      - "**/build/windows/x64/runner/Release/*.exe"
-      - "**/build/windows/x64/runner/Release/*.dll"
-      - "**/build/windows/x64/runner/Release/data/**"
+      - uber_drivers_app/build/app/outputs/flutter-apk/*.apk
