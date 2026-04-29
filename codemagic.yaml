@@ -18,18 +18,13 @@ workflows:
 
       - name: Build Windows App
         script: |
-          # Navigate into your specific folder from the screenshot
           cd uber_admin_panel
-          
-          # Clean and fetch dependencies
           flutter pub get
-          
-          # Build the release executable
           flutter build windows --release --no-tree-shake-icons
 
     artifacts:
-artifacts:
-      # This searches all subdirectories for the release files
+      # This recursive pattern (**/) tells Codemagic to search 
+      # every single folder in the repo for these files.
       - "**/build/windows/x64/runner/Release/*.exe"
       - "**/build/windows/x64/runner/Release/*.dll"
       - "**/build/windows/x64/runner/Release/data/**"
