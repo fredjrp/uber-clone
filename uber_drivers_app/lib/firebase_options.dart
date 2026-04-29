@@ -11,6 +11,6 @@ class DefaultFirebaseOptions {
     appId: '1:805708188196:android:016756c8de3f655b19a6b1',
     messagingSenderId: '1234567890',
     projectId: 'uberzo',
-    storageBucket: 'dummy-project.appspot.com',
+    storageBucket: 'uberzo.appspot.com',
   );
 }
